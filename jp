@@ -1,0 +1,13 @@
+#!/bin/bash
+
+jp () {
+  local path="$1"
+  local dirname=$(dirname "$path")
+  local basename=$(basename "$path")
+  local class=${basename%%.class}
+    
+  ( cd "$dirname" && javap -c -s -private $class > "$class".javap )
+}
+
+echo $1
+jp $1

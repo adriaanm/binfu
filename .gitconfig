@@ -1,0 +1,145 @@
+[include]
+  # For username / creds / etc -- from http://stackoverflow.com/questions/8505335/hiding-github-token-in-gitconfig
+  path = ~/.gitconfig.local
+# assumes you cloned https://github.com/retronym/libscala into ~/git/
+[diff "javap"]
+  textconv = ~/git/libscala/git-java/textconv-javap
+  cachetextconv = true
+[diff "jar-toc"]
+  textconv = ~/git/libscala/git-java/textconv-jar
+  cachetextconv = true
+[push]
+  default = simple
+[clean]
+  requireForce = false
+[grep]
+  lineNumber = true
+  extendedRegexp = true
+[log]
+  # relative, local, default, iso, rfc, and short
+  date = relative
+  # short, full
+  decorate = short
+  abbrev = 10
+  # this breaks git-svn.
+  abbrevCommit = true
+[core]
+  # default length of shortened sha-1
+  abbrev = 10
+  # quote unusual path characters
+  quotepath = true
+  sharedRepository = false
+  excludesfile = ~/.gitignore_global
+  attributesfile = ~/.gitattributes
+  # always LF in the repo
+  autocrlf = false
+  whitespace = tab-in-indent,trailing-space,space-before-tab,cr-at-eol
+[apply]
+  # fix trailing whitespace when applying patches
+  whitespace = fix
+[pretty]
+  # can have arbitrary pretty aliases
+  changelog = "format:* %H %s"
+[alias]
+  remote-tags = ls-remote --tags origin
+  changes = diff --name-status -r
+  diffstat = diff --stat -r
+  log-not-master = log --branches --not master
+  symbolic-head = !CURRENT=$(git symbolic-ref HEAD) && echo $CURRENT
+  up = remote update -p
+  co = checkout
+  # rco == re-checkout, for helping ant figure out what to recompile.  Oh, ant!
+  rco = !CURRENT=$(basename $(git symbolic-head)) && git checkout master && git checkout $CURRENT
+  st = status
+  lol = log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --graph --decorate --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  wdiff = diff
+  ms = merge --log=100 -s recursive -X ignore-space-at-eol -X patience
+
+[showbranch]
+  default = master HEAD
+
+# colors: normal, black, red, green, yellow, blue, magenta, cyan and white.
+# attributes: bold, dim, ul, blink and reverse
+# <foreground> [attribute] [background] [attribute]
+[color]
+  branch = auto
+  diff = auto
+  grep = auto
+  interactive = true
+  showbranch = auto
+  pager = true
+  sh = true
+  status = auto
+  ui = auto
+
+[color "status"]
+  added = green
+  header = magenta
+  # updated
+  # changed
+  # untracked
+  # branch
+  # nobranch
+
+[color "interactive"]
+  prompt = cyan
+  header = blue
+  help = green
+  error = red
+
+[color "branch"]
+  current = yellow black
+  local = yellow
+  remote = magenta
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red
+  new = green bold
+  whitespace = white reverse
+[color "grep"]
+  # context =
+  # filename =
+  # function =
+  # linenumber =
+  match = green reverse
+  selected = white
+  # separator
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan reverse
+  branch = magenta
+[rebase]
+  stat = true
+  autosquash = 1
+[diff]
+  renamelimit = 1000
+  renames = copies
+  mnemonicprefix = true
+[merge]
+  tool = opendiff
+  stat = true
+  conflictstyle = diff3
+  renamelimit = 5000
+  # I often prefer diff3, but each has their benefits
+  # conflictstyle = diff3
+[mergetool "diffmerge"]
+  cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
+  keepBackup = false
+  trustExitCode = true
+[rerere]
+  enabled = 0
+  autoupdate = true
+[diff "stat"]
+  namewidth = 100
+  width = 100
+[mergetool]
+  keepBackup = true
+[diff "zip"]
+  textconv = unzip -c -a
+[status]
+  showUntrackedFiles = no
+[help]
+  autocorrect = 1

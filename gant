@@ -1,0 +1,10 @@
+#!/bin/sh
+
+tempfoo=`basename $0`
+LOG=`mktemp /tmp/${tempfoo}.XXXXXX` || exit 1
+ant $@ | tee $LOG
+RES="`tail -n 5 $LOG`"
+shortRES="`tail -n 1 $LOG`"
+terminal-notifier -message "Build: $RES" -title "Ant build"
+say "Ant build $shortRES"
+rm $LOG 

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# diff parts in a three-way merge
+(F="$(mktemp -t partXXX)"; awk "/(^\|\|\|\|\|\|\|)|(^=======)/{i=2;next}{x=\"$F\"i;print > x}" $@ ; /usr/local/bin/git diff --patience --minimal -w -u "$F" "${F}2") || :
