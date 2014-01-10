@@ -45,10 +45,11 @@ function newpull() {
   curr_branch=$(git symbolic-ref -q HEAD)
   curr_branch=${curr_branch##refs/heads/}
   curr_branch=${curr_branch:-HEAD}
-  repo=$(git remote -v | cut -f2 | grep $(git config github.user) | tail -n 1 | perl -pe 's/.*$(git config github.user)\/(\S*).git.*/$1/' )
+  ghUser=$(git config github.user)
+  repo=$(git remote -v | cut -f2 | grep $ghUser | tail -n 1 | perl -pe 's/.*$ghUser\/(\S*).git.*/$1/' )
   repo=${repo:-scala}
   upstream=scala # TODO
-  open https://github.com/$(git config github.user)/$repo/pull/new/$upstream:${1:-master}...${2:-$curr_branch} 
+  open https://github.com/$ghUser/$repo/pull/new/$upstream:${1:-master}...${2:-$curr_branch}
 }
 
 
