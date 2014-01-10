@@ -1,10 +1,30 @@
-stApi="https://oss.sonatype.org/service/local/"
+#!/bin/bash -e
+
+stApi="https://oss.sonatype.org/service/local"
 
 function st_curl(){
-  curl -H "accept: application/json" --user $SONA_USER_TOKEN -s -o - $@
+  # -D - -v
+  curl -H "Content-Type: application/json" -H "accept: application/json,application/vnd.siesta-error-v1+json,application/vnd.siesta-validation-errors-v1+json"  --user $SONA_USER_TOKEN -s -o - $@
 }
 
-function SONA_USER_TOKEN() {
- st_curl "$stApi/staging/profile_repositories" | jq '.data[] | select(.profileName == "org.scala-lang") | .repositoryURI'
+function st_stagingRepoList() {
+ st_curl "$stApi/staging/profile_repositories" | jq '.data[] | select(.profileName == "org.scala-lang")'
 }
 
+function st_stagingRepoURLs() {
+  st_stagingRepoList | .repositoryURI
+}
+
+function st_stagingRepoDrop() {
+  repo=$1
+  message=$2
+  st_curl -d '{"data":{"stagedRepositoryIds":["'$repo'"],"description":"'$message'"}}' "$stApi/staging/bulk/drop"
+}
+
+function st_stagingRepoClose() {
+  repo=$1
+  message=$2
+  data=$(mktemp -t data)
+  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" > $data
+  st_curl -X POST -d @$data "$stApi/staging/bulk/close"
+}
