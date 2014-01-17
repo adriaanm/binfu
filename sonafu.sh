@@ -1,10 +1,11 @@
 #!/bin/bash -e
 
+# requires ~/.sonatype-curl that contains a line 'user = USER:PASS'
 stApi="https://oss.sonatype.org/service/local"
 
 function st_curl(){
   # -D - -v
-  curl -H "Content-Type: application/json" -H "accept: application/json,application/vnd.siesta-error-v1+json,application/vnd.siesta-validation-errors-v1+json"  --user $SONA_USER_TOKEN -s -o - $@
+  curl -H "Content-Type: application/json" -H "accept: application/json,application/vnd.siesta-error-v1+json,application/vnd.siesta-validation-errors-v1+json"  -K ~/.sonatype-curl -s -o - $@
 }
 
 function st_stagingRepoList() {
@@ -12,7 +13,7 @@ function st_stagingRepoList() {
 }
 
 function st_stagingRepoURLs() {
-  st_stagingRepoList | .repositoryURI
+  st_stagingRepoList | jq '.repositoryURI'
 }
 
 function st_stagingRepoDrop() {
