@@ -19,7 +19,9 @@ function st_stagingRepoURLs() {
 function st_stagingRepoDrop() {
   repo=$1
   message=$2
-  st_curl -d '{"data":{"stagedRepositoryIds":["'$repo'"],"description":"'$message'"}}' "$stApi/staging/bulk/drop"
+  data=$(mktemp -t data)
+  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" > $data
+  st_curl -X POST -d @$data "$stApi/staging/bulk/drop"
 }
 
 function st_stagingRepoClose() {
