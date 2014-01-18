@@ -14,6 +14,10 @@ function gh_pr_milestone_clear() {
   gh_curl -X PATCH -d '{"milestone":null}' "$ghApi/issues/$1"
 }
 
+function gh_pr_milestone_set() {
+  gh_curl -X PATCH -d '{"milestone":"'$2'"}' "$ghApi/issues/$1"
+}
+
 function gh_pull() { 
   gh_repos "pulls/$1"
 }
