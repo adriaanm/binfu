@@ -19,15 +19,11 @@ function st_stagingRepoURLs() {
 function st_stagingRepoDrop() {
   repo=$1
   message=$2
-  data=$(mktemp -t data)
-  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" > $data
-  st_curl -X POST -d @$data "$stApi/staging/bulk/drop"
+  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" | st_curl -X POST -d @- "$stApi/staging/bulk/drop"
 }
 
 function st_stagingRepoClose() {
   repo=$1
   message=$2
-  data=$(mktemp -t data)
-  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" > $data
-  st_curl -X POST -d @$data "$stApi/staging/bulk/close"
+  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" | st_curl -X POST -d @- "$stApi/staging/bulk/close"
 }
