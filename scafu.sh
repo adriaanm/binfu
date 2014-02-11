@@ -41,10 +41,11 @@ function closew () {
 function pr_dist () {
   pr=$1
   sha=$(cd ~/git/scala && git fetch scala refs/pull/$pr/head && git rev-parse FETCH_HEAD)
-  cd ~/git/scala-dist
+  pushd ~/git/scala-dist
   sbt 'set version := "2.11.0-'${sha:0:7}'-SNAPSHOT"' clean universal:stage
   echo "To run the repl for #$pr:"
   echo "`pwd`/target/universal/stage/bin/scala"
+  popd
 }
 
 alias scala="~/scala/latest/bin/scala"
