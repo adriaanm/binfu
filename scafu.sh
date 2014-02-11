@@ -1,6 +1,13 @@
 export ANT_OPTS="-Xmx3g -Xms3g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=384m -XX:+UseNUMA -XX:+UseParallelGC"
 # export ANT_OPTS="-Xms1536M -Xmx4096M -Xss2M -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=256m"
 
+function debug () {
+  export JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001"
+}
+
+function nodebug () {
+  export JAVA_OPTS=""
+}
 
 difftest () { for i in `find test/files -name *-$1.log`; do diff -u `echo $i | perl -pe s/-$1.log/.check/` $i; done }
 
@@ -29,6 +36,15 @@ function P () { open https://github.com/scala/scala/pull/$1 ; }
 function closew () {
   jira comment $1 $2
   jira close $1 
+}
+
+function pr_dist () {
+  pr=$1
+  sha=$(cd ~/git/scala && git fetch scala refs/pull/$pr/head && git rev-parse FETCH_HEAD)
+  cd ~/git/scala-dist
+  sbt 'set version := "2.11.0-'${sha:0:7}'-SNAPSHOT"' clean universal:stage
+  echo "To run the repl for #$pr:"
+  echo "`pwd`/target/universal/stage/bin/scala"
 }
 
 alias scala="~/scala/latest/bin/scala"
