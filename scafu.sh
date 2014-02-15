@@ -46,16 +46,20 @@ function closew () {
 #   cd ~/git
 #   hub clone scala/scala-dist
 function pr_dist () {
-  sha_dist $(git ls-remote https://github.com/scala/scala.git refs/pull/$1/head | cut -f1)
+  pr=$1
+  sha=$(git ls-remote https://github.com/scala/scala.git refs/pull/$pr/head | cut -f1)
+  echo "Making scala-dist for the head commit $sha of #$pr:"
+  sha_dist $sha
 }
 function sha_dist() {
   sha=$1
-  pushd ~/git/scala-dist
+  pushd ~/git/scala-dist > /dev/null
   sbt 'set version := "2.11.0-'${sha:0:7}'-SNAPSHOT"' clean universal:stage
-  echo "To run the repl for #$pr:"
-  echo "`pwd`/target/universal/stage/bin/scala"
-  popd
+  echo "Scala dist in `pwd`/target/universal/stage/bin/scala"
+  popd > /dev/null
 }
+alias prs='~/git/scala-dist/target/universal/stage/bin/scala -cp /tmp'
+alias prsc='~/git/scala-dist/target/universal/stage/bin/scalac -d /tmp -cp /tmp'
 
 alias scala="~/scala/latest/bin/scala"
 alias scalac="~/scala/latest/bin/scalac"
