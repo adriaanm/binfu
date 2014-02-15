@@ -38,9 +38,18 @@ function closew () {
   jira close $1 
 }
 
+# create a scala distribution for any commit that passed the pr-scala-publish-core part of PR validation
+# this assumes:
+# - a global sbt config (e.g., in ~/.sbt/0.13/resolvers.sbt) with the line:
+#    resolvers += "pr-scala" at "http://private-repo.typesafe.com/typesafe/scala-pr-validation-snapshots/"
+# - initial setup:
+#   cd ~/git
+#   hub clone scala/scala-dist
 function pr_dist () {
-  pr=$1
-  sha=$(cd ~/git/scala && git fetch scala refs/pull/$pr/head && git rev-parse FETCH_HEAD)
+  sha_dist $(git ls-remote https://github.com/scala/scala.git refs/pull/$1/head | cut -f1)
+}
+function sha_dist() {
+  sha=$1
   pushd ~/git/scala-dist
   sbt 'set version := "2.11.0-'${sha:0:7}'-SNAPSHOT"' clean universal:stage
   echo "To run the repl for #$pr:"
