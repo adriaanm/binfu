@@ -27,3 +27,9 @@ function st_stagingRepoClose() {
   message=$2
   echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" | st_curl -X POST -d @- "$stApi/staging/bulk/close"
 }
+
+function st_stagingRepoPromote() {
+  repo=$1
+  message=$2
+  echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" | st_curl -X POST -d @- "$stApi/staging/bulk/promote"
+}
