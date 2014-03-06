@@ -1,0 +1,2 @@
+#!/bin/bash
+RUNNER=scalac scala-hash $(git rev-parse HEAD) $@
