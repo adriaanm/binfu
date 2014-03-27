@@ -34,6 +34,7 @@
   # always LF in the repo
   autocrlf = false
   whitespace = tab-in-indent,trailing-space,space-before-tab,cr-at-eol
+        editor = mate_wait
 [apply]
   # fix trailing whitespace when applying patches
   whitespace = fix
@@ -50,7 +51,7 @@
   co = checkout
   # rco == re-checkout, for helping ant figure out what to recompile.  Oh, ant!
   rco = !CURRENT=$(basename $(git symbolic-head)) && git checkout master && git checkout $CURRENT
-  st = status
+  st = status -sb -u
   lol = log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --graph --decorate --date=relative
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   wdiff = diff

@@ -27,13 +27,15 @@ function gh_pr_merged() {
 }
 
 function gh_pr_closed_milestone() {
-  gh_repos "issues?milestone=$1&state=closed" | jq '.[].number'
+  gh_repos "issues?milestone=$1&state=closed&per_page=100&page=$2" | jq '.[].number'
 }
 
+# TODO: handle pagination automatically
 function gh_pr_closed_unmerged_milestone() {
   echo "To clear the milestone of unmerged but closed PRs for milestone $1, execute the following:"
+  echo "NOTE: this only looks at the first 100 PRs. Specify a page number as the second argument to look past that."
 
-  for pr in $(gh_pr_closed_milestone $1); do
+  for pr in $(gh_pr_closed_milestone $1 $2); do
     if [ "$(gh_pr_merged $pr)" == "false" ]; then
         echo "gh_pr_milestone_clear $pr"
     fi

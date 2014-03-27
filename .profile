@@ -1,6 +1,9 @@
 # MUST NOT CONTAIN SECRETS
 
 export PATH="$HOME/bin:$HOME/scala/latest/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+
+export PATH=$(brew --prefix ruby)/bin:$PATH
+
 export SCALA_SRC_HOME=$HOME/git/scala
 export SCALA_PACKS_DIR=$HOME/scala-packs
 

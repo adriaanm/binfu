@@ -52,6 +52,12 @@ function newpull() {
   open https://github.com/$ghUser/$repo/pull/new/$upstream:${1:-master}...${2:-$curr_branch}
 }
 
+function sca_tag() {
+        echo "Tagging commit $1 as version $2"
+        cd ~/git/scala
+        git tag -s -m"Scala $2" "v$2" $1
+}
+
 
 # function gitpa() { git push --all ;}
 # # ticket workflow: check ticket N in trac, accept, gitnewt N, add test files tN.scala, hack hack hack, git commit, testtick N, gitdone N, git commit, git svn dcommit
