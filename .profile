@@ -4,7 +4,13 @@ export PATH="$HOME/bin:$HOME/scala/latest/bin:/usr/local/bin:/usr/local/sbin:$PA
 export SCALA_SRC_HOME=$HOME/git/scala
 export SCALA_PACKS_DIR=$HOME/scala-packs
 
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/
+java_home () {
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+  export PATH=$JAVA_HOME/bin:$PATH
+}
+
+java_home 1.6
+
 export EDITOR=`which mate_wait`
 
 # to use XQuartz
