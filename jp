@@ -1,13 +1,12 @@
 #!/bin/bash
 
-jp () {
-  local path="$1"
-  local dirname=$(dirname "$path")
-  local basename=$(basename "$path")
-  local class=${basename%%.class}
-  # perl to replace tabs by spaces
-  ( cd "$dirname" && javap -c -s -private $class | perl -pe 's/\t/  /g' > "$class".javap )
-}
+files="$@"
 
-echo $1
-jp $1
+for f in $files; do
+  path="$1"
+  dirname=$(dirname "$path")
+  basename=$(basename "$path")
+  class=${basename%%.class}
+  # perl to replace tabs by spaces
+  ( cd "$dirname" && javap -v $class | perl -pe 's/\t/  /g' > "$class".javap )
+done
