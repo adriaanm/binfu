@@ -1,9 +1,3 @@
-export PS1='$(__git_ps1 "[ %s ]") \W/ \$ ' # \e]1;\W/ $(__git_ps1 "%s")\a'
-export GIT_PS1_SHOWUPSTREAM="auto"
-export GIT_PS1_SHOWDIRTYSTATE="1"
-export GIT_PS1_SHOWUNTRACKEDFILES="1"
-export GIT_PS1_SHOWSTASHSTATE="1"
-
 alias g='git'
 alias gam='git commit -a -m'
 alias gba='git branch -a'

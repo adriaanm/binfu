@@ -1,8 +1,8 @@
-export ANT_OPTS="-Xmx3g -Xms3g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=384m -XX:+UseNUMA -XX:+UseParallelGC"
+export ANT_OPTS="-Xmx3g" # -Xms3g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=384m -XX:+UseNUMA -XX:+UseParallelGC"
 # export ANT_OPTS="-Xms1536M -Xmx4096M -Xss2M -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=256m"
 
 function debug () {
-  export JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001"
+  export JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8002"
 }
 
 function nodebug () {
@@ -15,7 +15,8 @@ difftest () { for i in `find test/files -name *-$1.log`; do diff -u `echo $i | p
 # alias eclipser="/Applications/eclipse/Eclipse.app/Contents/MacOS/eclipse --launcher.ini /Users/adriaan/eclipse/eclipse.ini -data /Users/adriaan/eclipse/release/workspace -configuration /Users/adriaan/eclipse/release/configuration -clean"
 
 alias ant="gant"
-alias qs='~/git/scala/build/quick/bin/scala -cp /tmp'
+alias qs='~/git/scala/build/quick/bin/scala -Dscala.color=1 -cp /tmp'
+alias qsx='~/git/scala/build/quick/bin/scala -Dscala.color=1 -Xexperimental -cp /tmp'
 alias qsc='~/git/scala/build/quick/bin/scalac -d /tmp -cp /tmp'
 alias pt='test/partest --all'
 # alias ptv='SCALAC_OPTS=-Yvirtpatmat test/partest'
@@ -25,6 +26,7 @@ alias pt='test/partest --all'
 
 alias aqb='ant quick.bin'
 alias part='ant pack.done && test/partest'
+alias acl='rm -rf build/quick/classes/{reflect,compiler} build/pack build/quick/*.complete'
 
 lanton () { (git fetch origin ; git clean -fxd ; git checkout -f $1 ; git reset --hard ; git --no-pager show ; lant $2 $3 $4 ) | tee /tmp/log ; (grep timer /tmp/log; grep -i fail /tmp/log; cat /tmp/log) | mail -s "buildlog" adriaan.moors@typesafe.com ; git push origin; }
 testopt () { lanton $1 test-opt $2 $3 $4 ; }
