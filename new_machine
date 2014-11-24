@@ -1,0 +1,35 @@
+# install stuff:
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+brew doctor
+
+brew install zsh zsh-completions git ant lighttpd gawk hub jq terminal-notifier bash-completion  git-extras tofrodos wget
+curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+
+brew install caskroom/cask/brew-cask
+brew cask install rowanj-gitx intellij-idea java rescuetime slack dropbox
+brew tap caskroom/fonts  
+brew cask search /font-source/
+brew cask install font-source-code-pro  font-source-sans-pro   font-source-serif-pro
+
+# synch with dropbox
+
+# plug in shared scripts/config from Dropbox
+ln -sf ~/Dropbox/bin ~/
+ln -sf ~/bin/.gitconfig ~/
+ln -sf ~/bin/.profile ~/
+ln -sf ~/Dropbox/.gitconfig.local ~/
+cd 
+mkdir git
+git clone https://github.com/retronym/libscala.git
+
+cd ~/Dropbox/Desktop/
+mv * ~/Desktop/
+cd ..
+rm -rf Desktop
+ln -sf ~/Desktop .
+
+cd ~/Dropbox/Documents/
+mv * ~/Documents/
+cd ..
+rm -rf Documents/
+ln -sf ~/Documents .
