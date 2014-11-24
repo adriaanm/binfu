@@ -5,8 +5,8 @@ jp () {
   local dirname=$(dirname "$path")
   local basename=$(basename "$path")
   local class=${basename%%.class}
-    
-  ( cd "$dirname" && javap -c -s -private $class > "$class".javap )
+  # perl to replace tabs by spaces
+  ( cd "$dirname" && javap -c -s -private $class | perl -pe 's/\t/  /g' > "$class".javap )
 }
 
 echo $1
