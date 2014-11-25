@@ -53,7 +53,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/bin:/usr/local/Cellar/ruby/2.1.5/bin:/Users/adriaan/bin:/Users/adriaan/scala/latest/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$(brew --prefix ruby)/bin:$HOME/bin:$HOME/scala/latest/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -80,3 +81,20 @@ export PATH="/bin:/usr/local/Cellar/ruby/2.1.5/bin:/Users/adriaan/bin:/Users/adr
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export SCALA_SRC_HOME=$HOME/git/scala
+export SCALA_PACKS_DIR=$HOME/scala-packs
+
+java_home () {
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+  export PATH=$JAVA_HOME/bin:$PATH
+}
+
+java_home 1.8
+
+export EDITOR=`which mate_wait`
+
+source ~/bin/gitfu.sh
+source ~/bin/hubfu.sh
+source ~/bin/scafu.sh
+source ~/bin/sonafu.sh
