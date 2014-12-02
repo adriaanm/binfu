@@ -12,7 +12,7 @@ brew cask search /font-source/
 brew cask install font-source-code-pro  font-source-sans-pro   font-source-serif-pro
 
 # synch with dropbox
-
+# pause synching when done
 # plug in shared scripts/config from Dropbox
 ln -sf ~/Dropbox/bin ~/
 ln -sf ~/bin/.gitconfig ~/
