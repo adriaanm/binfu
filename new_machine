@@ -17,6 +17,7 @@ brew cask install font-source-code-pro  font-source-sans-pro   font-source-serif
 ln -sf ~/Dropbox/bin ~/
 ln -sf ~/bin/.gitconfig ~/
 ln -sf ~/bin/.profile ~/
+ln -sf ~/bin/.zshrc ~/
 ln -sf ~/Dropbox/.gitconfig.local ~/
 cd 
 mkdir git
