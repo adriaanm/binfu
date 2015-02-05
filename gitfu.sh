@@ -1,4 +1,13 @@
 alias g='git'
+alias ga='git add -u --patch'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+alias pr211='hub pull-request -o -b scala:2.11.x'
+alias pr212='hub pull-request -o -b scala:2.11.x'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
+alias grh='git reset --hard'
+
 alias gam='git commit -a -m'
 alias gba='git branch -a'
 alias gbag='git branch -a |grep'
@@ -16,9 +25,6 @@ alias gitpatches='git format-patch --full-index --binary'
 alias glsm='git log --no-merges master..' # git, log since master
 alias glnm='git lol --branches --not master'
 alias gmm='git merge master'
-alias gra='git rebase --abort'
-alias grc='git rebase --continue'
-alias grh='git reset --hard'
 alias grhchop='git reset --hard ; git chop'
 alias grhh='git reset --hard head^'
 alias grm='git rebase master'
@@ -26,7 +32,6 @@ alias gsr='git svn rebase'
 alias gupd='git commit -a --amend -C head'
 alias gvps='git verify-pack -v .git/objects/pack/pack-*.idx | sort -k3n'
 alias gprm='git pull --rebase main master'
-alias gaup='git add -u --patch'
 
 function gnbm() { git fetch main; git checkout main/master -b $1; git push --set-upstream origin $1 ;} # git new branch off of master
 

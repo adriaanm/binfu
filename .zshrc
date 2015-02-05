@@ -43,13 +43,16 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew composer git-flow github node npm osx textmate)
+plugins=(git brew brew-cask jira sbt scala osx textmate terminalapp ssh)
 
 source $ZSH/oh-my-zsh.sh
+
 
 # User configuration
 
@@ -94,7 +97,19 @@ java_home 1.8
 
 export EDITOR=`which mate_wait`
 
+setopt interactivecomments
+
 source ~/bin/gitfu.sh
 source ~/bin/hubfu.sh
 source ~/bin/scafu.sh
 source ~/bin/sonafu.sh
+
+# added by travis gem
+# [ -f /Users/adriaan/.travis/travis.sh ] && source /Users/adriaan/.travis/travis.sh
+
+export CHEF_ORG="typesafe-scala"
+
+export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.5.3/libexec"
+export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.7.1.0/libexec"
+
+source /usr/local/share/zsh/site-functions/_aws

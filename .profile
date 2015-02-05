@@ -16,6 +16,12 @@ java_home 1.8
 
 export EDITOR=`which mate_wait`
 
+source ~/bin/gitfu.sh
+source ~/bin/hubfu.sh
+source ~/bin/scafu.sh
+source ~/bin/sonafu.sh
+
+
 # to use XQuartz
 export DISPLAY=:0
 # for gnuplot
