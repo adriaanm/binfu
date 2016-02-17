@@ -33,3 +33,11 @@ function st_stagingRepoPromote() {
   message=$2
   echo "{\"data\":{\"description\":\"$message\",\"stagedRepositoryIds\":[\"$repo\"]}}" | st_curl -X POST -d @- "$stApi/staging/bulk/promote"
 }
+
+
+function st_stats() {
+  st_curl "$stApi/stats/timeline?p=1d58bfc29fa3c&g=org.scala-lang&a=scala-library&v=$1&t=raw&from=$2&nom=$3" | jq -r '"\(.data.version)\t\(.data.timeline | map(tostring) | join("\t"))"'
+}
+
+# for i in 0 1 2 3 4 5 6 7; do st_stats 2.11.$i 201401 25 ; done
+# for i in 0 1 2 3 4 5 6; do st_stats 2.10.$i 201401 25; done
