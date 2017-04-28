@@ -1,0 +1,3 @@
+#!/bin/bash
+
+wget -q -O - "https://scala-ci.typesafe.com/job/$1/$2/api/json?tree=result,actions[parameters[name,value]]" | jq '(.actions[0].parameters[] | select (.name == "_scabot_pr") | .value), .result' | perl -pe 's/\n/, /g'
