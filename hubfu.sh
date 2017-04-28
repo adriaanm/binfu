@@ -6,6 +6,11 @@ function gh_curl(){
   curl -H "Authorization: token $(git config github.token)" -s -o - $@
 }
 
+function gh_user() {
+  gh_curl "$ghApi/search/users?q=$1"
+}
+
+
 function gh_repos() {
   gh_curl "$ghApi/$1"
 }

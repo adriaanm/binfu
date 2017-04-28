@@ -9,7 +9,7 @@
   textconv = ~/git/libscala/git-java/textconv-jar
   cachetextconv = true
 [push]
-  default = simple
+  default = current
 [clean]
   requireForce = false
 [grep]
@@ -20,12 +20,12 @@
   date = relative
   # short, full
   decorate = short
-  abbrev = 10
+  abbrev = 7
   # this breaks git-svn.
   abbrevCommit = true
 [core]
   # default length of shortened sha-1
-  abbrev = 10
+  abbrev = 7
   # quote unusual path characters
   quotepath = true
   sharedRepository = false
@@ -52,7 +52,7 @@
   # rco == re-checkout, for helping ant figure out what to recompile.  Oh, ant!
   rco = !CURRENT=$(basename $(git symbolic-head)) && git checkout master && git checkout $CURRENT
   st = status -sb -u
-  lol = log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=10 --abbrev-commit --graph --decorate --date=relative
+  lol = log --simplify-by-decoration --date-order --format='%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev=7 --abbrev-commit --graph --decorate --date=relative
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   wdiff = diff
   ms = merge --log=100 -s recursive -X ignore-space-at-eol -X patience
@@ -119,6 +119,7 @@
   renamelimit = 1000
   renames = copies
   mnemonicprefix = true
+        compactionHeuristic = 1
 [merge]
   tool = opendiff
   stat = true
@@ -131,7 +132,7 @@
   keepBackup = false
   trustExitCode = true
 [rerere]
-  enabled = 0
+        enabled = true
   autoupdate = true
 [diff "stat"]
   namewidth = 100
@@ -144,3 +145,11 @@
   showUntrackedFiles = no
 [help]
   autocorrect = 1
+[user]
+        signingkey = EEFEA620
+[pager]
+        log = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+        show = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+        diff = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+[interactive]
+        diffFilter = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight

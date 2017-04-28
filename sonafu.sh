@@ -40,4 +40,5 @@ function st_stats() {
 }
 
 # for i in 0 1 2 3 4 5 6 7; do st_stats 2.11.$i 201401 25 ; done
-# for i in 0 1 2 3 4 5 6; do st_stats 2.10.$i 201401 25; done
+# for i in 0 1 2 3 4 5 6; do st_stats 2.10.$i 201201 24; done
+# for i in 0 1 2 3 4; do st_stats 2.9.$i 201201 24; done

@@ -3,10 +3,12 @@ alias ga='git add -u --patch'
 alias gp='git pull'
 alias gpr='git pull --rebase'
 alias pr211='hub pull-request -o -b scala:2.11.x'
-alias pr212='hub pull-request -o -b scala:2.11.x'
+alias pr212='hub pull-request -o -b scala:2.12.x'
 alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias grh='git reset --hard'
+alias gdw='git diff -w'
+
 
 alias gam='git commit -a -m'
 alias gba='git branch -a'
