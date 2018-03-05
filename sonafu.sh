@@ -39,6 +39,10 @@ function st_stats() {
   st_curl "$stApi/stats/timeline?p=1d58bfc29fa3c&g=org.scala-lang&a=scala-library&v=$1&t=raw&from=$2&nom=$3" | jq -r '"\(.data.version)\t\(.data.timeline | map(tostring) | join("\t"))"'
 }
 
-# for i in 0 1 2 3 4 5 6 7; do st_stats 2.11.$i 201401 25 ; done
-# for i in 0 1 2 3 4 5 6; do st_stats 2.10.$i 201201 24; done
-# for i in 0 1 2 3 4; do st_stats 2.9.$i 201201 24; done
+function st_stats_ip() {
+  st_curl "$stApi/stats/timeline?p=1d58bfc29fa3c&g=org.scala-lang&a=scala-library&v=$1&t=ip&from=$2&nom=$3" | jq -r '"\(.data.version)\t\(.data.timeline | map(tostring) | join("\t"))"'
+}
+
+# for i in 0 1 2 3 4 5 6; do st_stats_ip 2.10.$i 201701 9; done
+# for i in 0 1 2 3 4 5 6 7 8 9 10 11; do st_stats_ip 2.11.$i 201701 9 ; done
+# for i in 0 1 2 3; do st_stats_ip 2.12.$i 201701 9; done

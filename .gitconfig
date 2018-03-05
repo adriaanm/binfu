@@ -34,7 +34,7 @@
   # always LF in the repo
   autocrlf = false
   whitespace = tab-in-indent,trailing-space,space-before-tab,cr-at-eol
-        editor = mate_wait
+  editor = mate -w
 [apply]
   # fix trailing whitespace when applying patches
   whitespace = fix
@@ -56,6 +56,7 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   wdiff = diff
   ms = merge --log=100 -s recursive -X ignore-space-at-eol -X patience
+  a = add -u --patch
 
 [showbranch]
   default = master HEAD
