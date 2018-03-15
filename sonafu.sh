@@ -36,7 +36,11 @@ function st_stagingRepoPromote() {
 
 
 function st_stats() {
-  st_curl "$stApi/stats/timeline?p=1d58bfc29fa3c&g=org.scala-lang&a=scala-library&v=$1&t=raw&from=$2&nom=$3" | jq -r '"\(.data.version)\t\(.data.timeline | map(tostring) | join("\t"))"'
+  ver=$1  # version of scala-library
+  from=$2 # YYYMM
+  months=$3 # number of months
+  type=${4-raw} # raw or ip
+  st_curl "$stApi/stats/timeline?p=1d58bfc29fa3c&g=org.scala-lang&a=scala-library&v=$ver&t=$type&from=$from&nom=$months" | jq -r '"\(.data.version)\t\(.data.timeline | map(tostring) | join("\t"))"'
 }
 
 function st_stats_ip() {

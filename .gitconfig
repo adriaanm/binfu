@@ -38,6 +38,7 @@
   autocrlf = false
   whitespace = tab-in-indent,trailing-space,space-before-tab,cr-at-eol
   editor = mate -w
+  pager = less -+$LESS -FRX
 [apply]
   # fix trailing whitespace when applying patches
   whitespace = fix
@@ -123,7 +124,7 @@
   renamelimit = 1000
   renames = copies
   mnemonicprefix = true
-        compactionHeuristic = 1
+  compactionHeuristic = 1
 [merge]
   tool = opendiff
   stat = true
@@ -136,7 +137,7 @@
   keepBackup = false
   trustExitCode = true
 [rerere]
-        enabled = true
+  enabled = true
   autoupdate = true
 [diff "stat"]
   namewidth = 100
@@ -150,10 +151,10 @@
 [help]
   autocorrect = 1
 [user]
-        signingkey = EEFEA620
+  signingkey = EEFEA620
 [pager]
-        log = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
-        show = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
-        diff = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+  log = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+  show = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+  diff = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
 [interactive]
-        diffFilter = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight
+  diffFilter = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight

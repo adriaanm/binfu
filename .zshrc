@@ -1,4 +1,3 @@
-# Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -49,10 +48,13 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew brew-cask jira sbt scala osx textmate terminalapp ssh)
+plugins=(brew brew-cask zsh-syntax-highlighting jira sbt scala osx textmate terminalapp ssh zsh-notify)
 
 source $ZSH/oh-my-zsh.sh
 
+# source ~/git/zsh-notify/notify.plugin.zsh
+# zstyle ':notify:*' activate-terminal yes
+# zstyle ':notify:*' command-complete-timeout 15
 
 # User configuration
 
@@ -112,4 +114,3 @@ export CHEF_ORG="typesafe-scala"
 export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.5.3/libexec"
 export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.7.1.0/libexec"
 
-export AWS_USER=adriaan-scripts
