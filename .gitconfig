@@ -8,6 +8,9 @@
 [diff "jar-toc"]
   textconv = ~/git/libscala/git-java/textconv-jar
   cachetextconv = true
+[diff "html-norm"]
+  textconv = ~/bin/html-norm.sh
+  # cachetextconv = true
 [push]
   default = current
 [clean]
