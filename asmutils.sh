@@ -7,4 +7,4 @@
 # showSuccess := false
 # logLevel in run := Level.Error
 
-java -Dsbt.boot.properties=/Users/adriaan/bin/asmutils-boot.properties -jar /Users/adriaan/git/launcher/target/sbt-launch-1.0.2-SNAPSHOT.jar "$1"
+java -Dsbt.boot.properties=/Users/adriaan/bin/asmutils-boot.properties -jar /usr/local/Cellar/sbt/1.1.4/libexec/bin/sbt-launch.jar "$1"
