@@ -1,5 +1,9 @@
 function jardiff() {
-    java -jar /Users/adriaan/git/jardiff/core/target/scala-2.12/jardiff-core-assembly-1.0-SNAPSHOT.jar "$@";
+    [[ -f "$JARDIFF_JAR" ]] || (
+        echo "Please download https://gitreleases.dev/gh/scala/jardiff/latest/jardiff.jar to a location specified by \$JARDIFF_JAR" >&2
+        return 1
+    )
+    java -jar "$JARDIFF_JAR" "$@";
 }
 
 function nodebug () {
