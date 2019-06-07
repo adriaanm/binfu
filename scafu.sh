@@ -132,3 +132,97 @@ alias scala="~/scala/latest/bin/scala"
 alias scalac="~/scala/latest/bin/scalac"
 alias scala29="~/scala/2.9/bin/scala"
 alias scalac29="~/scala/2.9/bin/scalac"
+
+
+_dotty_launch() {
+  RUNNER=$1
+  shift
+  VERSION=$1
+  shift
+  CP=$(coursier fetch --keep-optional -q -p  "ch.epfl.lamp:dotty-compiler_${VERSION:0:3}:$VERSION") || return 1
+  java $JAVA_OPTS -classpath "$CP" "$RUNNER" "$@"
+}
+
+dotc-launch() {
+  V=$1
+  shift
+  _dotty_launch dotty.tools.dotc.Main $V -usejavacp "$@"
+}
+
+dotr-launch() {
+  V=$1
+  shift
+  _dotty_launch dotty.tools.dotc.repl.Main $V -usejavacp "$@"
+}
+
+_scala_launch() {
+  RUNNER=$1
+  shift
+  VERSION=$1
+  shift
+  CP=$(scala-classpath "$VERSION") || return 1
+  java $JAVA_OPTS -classpath "$CP" "$RUNNER" "$@"
+}
+
+scalac-launch() {
+  V=$1
+  shift
+  _scala_launch scala.tools.nsc.Main $V -usejavacp "$@"
+}
+
+scala-launch() {
+  V=$1
+  shift
+  _scala_launch scala.tools.nsc.MainGenericRunner "$V" -usejavacp "$@"
+}
+
+scala-classpath() {
+  VERSION=$1
+  shift
+  coursier fetch --keep-optional -q -p -r https://scala-ci.typesafe.com/artifactory/scala-pr-validation-snapshots -r https://scala-ci.typesafe.com/artifactory/scala-integration "org.scala-lang:scala-compiler:$VERSION" || return 1
+}
+
+scala-pr() {
+  PR=$1
+  shift
+  scala-launch $(scala-pr-version "$PR") "$@"
+}
+
+scalac-pr() {
+  PR=$1
+  shift
+  scalac-launch $(scala-pr-version "$PR") "$@"
+}
+
+scala-ref() {
+  PR=$1
+  shift
+  scala-launch $(scala-ref-version "$PR") "$@"
+}
+
+scalac-ref() {
+  PR=$1
+  shift
+  scalac-launch $(scala-ref-version "$PR") "$@"
+}
+
+scala-pr-version() {
+  PR=$1
+  scala-ref-version "pull/$PR/head"
+}
+
+scala-ref-version() (
+  REF=$1
+  shift
+  set -o pipefail
+  TOKEN=$(git config github.token) || return 1
+  # Lookup the SHA for the given reference.
+  SHA=$(curl --fail --silent -H'Accept: application/vnd.github.v3.sha' -H "Authorization: token $TOKEN" https://api.github.com/repos/scala/scala/commits/$REF) || (echo "Reference not found" >&2; return 1)
+  SHORT_SHA=${SHA:0:7}
+  # Read build.sbt and grep the value of baseVersion
+  BASE_VERSION=$(curl --fail --silent -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3.raw" "https://api.github.com/repos/scala/scala/contents/build.sbt?ref=$REF" | egrep '(baseVersion in Global|Global / baseVersion\b)' | gsed -r 's/.*"(.*)".*/\1/') || return 1
+  CROSS="-bin"
+  (echo $BASE_VERSION | grep -q -E '\d+\.\d+.0') && CROSS="-pre"
+  VERSION="$BASE_VERSION$CROSS-$SHORT_SHA-SNAPSHOT"
+  echo $VERSION
+)
