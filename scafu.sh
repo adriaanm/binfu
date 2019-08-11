@@ -1,11 +1,3 @@
-function jardiff() {
-    [[ -f "$JARDIFF_JAR" ]] || (
-        echo "Please download https://gitreleases.dev/gh/scala/jardiff/latest/jardiff.jar to a location specified by \$JARDIFF_JAR" >&2
-        return 1
-    )
-    java -jar "$JARDIFF_JAR" "$@";
-}
-
 function nodebug () {
   export JAVA_OPTS=""
 }
