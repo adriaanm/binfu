@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-echo "usage:"
-echo "* currently you have to edit this script for each use"
-echo "maintenance status:"
-echo "* this is somewhat rough, but hopefully already useful"
-echo "* pull requests with improvements welcome"
-echo
+notice() {
+  cat <<EOF
+notice:
+* currently you have to edit this script for each use
+maintenance status:
+* this is somewhat rough, but hopefully already useful
+* pull requests with improvements welcome
+EOF
+}
 
 die () {
   echo "$@"
@@ -41,7 +44,7 @@ run () {
   }
 
   local br="2.12.x"
-  local brs=$(git br --contains $sha)
+  local brs=$(git branch --contains $sha)
   if $(grep 2.10.x <<< $brs > /dev/null) ; then
     [[ "$br" == "2.10.x" ]] || {
       echo "Merge commit from 2.10.x: $sha"
@@ -78,10 +81,10 @@ run () {
   # ! java -cp $cp scala.tools.nsc.Main -usejavacp Test.scala 2>&1 | grep "unreachable code"
 
   cd /Users/luc/Downloads/scala-sweble-bug
-  sbt ++$sv 'set resolvers += "scala-integration" at "https://scala-ci.typesafe.com/artifactory/scala-integration/"' compile
+  sbt "++$sv!" 'set resolvers += "scala-integration" at "https://scala-ci.typesafe.com/artifactory/scala-integration/"' compile
 }
 
-[[ $1 == "run-the-run" ]] && {
+if [[ $1 == "run-the-run" ]]; then
   echo "=== TESTING $(current) ==="
   cd "$2"
   run
@@ -99,9 +102,13 @@ run () {
   esac
   echo
   exit $res
-}
 
-[[ $# -eq 2 ]] || die "usage: $0 <good> <bad>"
+elif [[ $# -ne 2 ]]; then
+  notice
+  die "usage: $0 <good> <bad>"
+else
+  notice
+fi
 
 good=$1
 bad=$2
@@ -115,4 +122,5 @@ git bisect start --no-checkout
 git bisect good $good
 git bisect bad $bad
 git bisect run "$script_path" run-the-run "$current_dir"
+git bisect log > "bisect_$good-$bad.log"
 git bisect reset
