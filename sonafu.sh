@@ -16,6 +16,12 @@ function st_stagingRepoURLs() {
   st_stagingRepoList | jq '.repositoryURI'
 }
 
+function st_stagingRepoPromoteCommands() {
+  echo "To promote all staging repositories, run the following commands:"
+  allRepoIds=$(st_stagingRepoList | jq '.repositoryId' | tr -d \")
+  for repoId in $allRepoIds; do echo "st_stagingRepoPromote $repoId"; done
+}
+
 function st_stagingRepoDrop() {
   repo=$1
   message=$2
